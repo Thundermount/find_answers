@@ -37,16 +37,19 @@ class TestSolver:
 
         sites = self.__get_links()
         for link in sites:
-            res = requests.get('https://www.google.com' + link)
-            page = res.text.lower()
+            try:
+                res = requests.get('https://www.google.com' + link)
+                page = res.text.lower()
 
-            i = 0
-            for option in options:
-                score = 0.0
-                opt = option.split(" ")
-                for word in opt:
-                    if word in page:
-                        score += 1.0
-                answers[i+1] += score
-                i+=1
+                i = 0
+                for option in options:
+                    score = 0.0
+                    opt = option.split(" ")
+                    for word in opt:
+                        if word in page:
+                            score += 1.0
+                    answers[i+1] += score
+                    i+=1
+            except Exception:
+                pass
         return answers
